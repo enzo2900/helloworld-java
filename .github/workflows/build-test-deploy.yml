@@ -29,14 +29,13 @@ jobs:
         env: 
             MAVEN_OPTS: "-DMaven.repo.local=${{github.workspace}}/.m2/repository"
 
-      - name: Upload jar
-        run: mv target/*.jar "helloworld-{ env:$PROJECT_VERSION}.jar"
+     
       - name: cache
         id: cache-dependancies
         uses: actions/cache@v4.2.2
         with:
           path: "-DMaven.repo.local=${{github.workspace}}/.m2/repository"
-          key: ${{runner.os}}-maven-${{ hashFiles("**/pom.xml")}}
+          key: ${{runner.os}}-maven-${{ hashFiles('**/pom.xml')}}
           
 
 

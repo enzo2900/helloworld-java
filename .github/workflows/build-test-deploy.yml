@@ -13,6 +13,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
+      - name: cache
+        id: cache-dependancies
+        uses: actions/cache@v4.1.2
+        with:
+          path: "-DMaven.repo.local=${{github.workspace}}/.m2/repository"
+          key: ${{runner.os}}-maven-${{ hashFiles('**/pom.xml')}}
         
       - name: Setup Java JDK
         uses: actions/setup-java@v4.5.0
@@ -22,21 +28,17 @@ jobs:
           
       - name: newVersion
         run: echo $PROJECT_VERSION
-      - name: clean maven
-        run: mvn clean package -DskipTests
-        env: 
-            MAVEN_OPTS: "-DMaven.repo.local=${{github.workspace}}/.m2/repository"
+     
 
      
-      - name: cache
-        id: cache-dependancies
-        uses: actions/cache@v4.1.2
-        with:
-          path: "-DMaven.repo.local=${{github.workspace}}/.m2/repository"
-          key: ${{runner.os}}-maven-${{ hashFiles('**/pom.xml')}}
+      
+      - name: clean maven
+        env: 
+          MAVEN_OPTS: "-DMaven.repo.local=${{github.workspace}}/.m2/repository"
+        run: mvn clean package -DskipTests
 
-      - name: test
-          run mvn test
+      - name: test ma
+        run: mvn test
 
 
 

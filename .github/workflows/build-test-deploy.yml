@@ -8,7 +8,7 @@ env:
   PROJECT_VERSION: '1.0.0'
 
 jobs:
-  simple-job:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -28,17 +28,34 @@ jobs:
           
       - name: newVersion
         run: echo $PROJECT_VERSION
-     
-
-     
       
       - name: clean maven
         env: 
           MAVEN_OPTS: "-DMaven.repo.local=${{github.workspace}}/.m2/repository"
         run: mvn clean package -DskipTests
 
+      
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: cache
+        id: cache-dependancies
+        uses: actions/cache@v4.1.2
+        with:
+          path: "-DMaven.repo.local=${{github.workspace}}/.m2/repository"
+          key: ${{runner.os}}-maven-${{ hashFiles('**/pom.xml')}}
+        
+      - name: Setup Java JDK
+        uses: actions/setup-java@v4.5.0
+        with: 
+          java-version: 17
+          distribution: corretto
       - name: test ma
         run: mvn test
-
+        env: 
+          MAVEN_OPTS: "-DMaven.repo.local=${{github.workspace}}/.m2/repository"
 
 

@@ -88,7 +88,7 @@ jobs:
         with:
           name: App_to_deploy
       - name: cat jar
-        run: cat ${{github.workspace}}/target/*.jar
+        run: cat /home/runner/work/helloworld-java/helloworld-java
         
         
         

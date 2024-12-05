@@ -37,7 +37,7 @@ jobs:
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4.4.3
         with:
-          name: App_to_deploy
+          name: helloworld-${{env.PROJECT_VERSION}}.jar
           path: ${{github.workspace}}/target/*.jar
 
       
@@ -86,9 +86,8 @@ jobs:
       - name: Download a Build Artifact
         uses: actions/download-artifact@v4.1.8
         with:
-          name: App_to_deploy
-      - name: cat jar
-        run: cat /home/runner/work/helloworld-java/helloworld-java
+          name: helloworld-${{env.PROJECT_VERSION}}.jar
+
         
         
         

@@ -75,6 +75,9 @@ jobs:
         with:
           name: helloworld-${{env.PROJECT_VERSION}}.jar
 
+      - name: Deploy to production
+        run: echo "Deploying application..."
+
         
         
         
